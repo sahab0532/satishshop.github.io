@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<main>
+    <!-- page-banner-area-start -->
+    <div class="page-banner-area page-banner-height-2" data-background="{% static 'assets/img/banner/page-banner-4.jpg'%}">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12">
+                    <div class="page-banner-content text-center">
+                        <h4 class="breadcrumb-title">My Account</h4>
+                        <div class="breadcrumb-two">
+                            <nav>
+                               <nav class="breadcrumb-trail breadcrumbs">
+                                  <ul class="breadcrumb-menu">
+                                     <li class="breadcrumb-trail">
+                                        <a href="index.html"><span>Home</span></a>
+                                     </li>
+                                     <li class="trail-item">
+                                        <span>My Account</span>
+                                     </li>
+                                  </ul>
+                               </nav> 
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- page-banner-area-end -->
+
+  <!-- account-area-start -->
+  <div class="account-area mt-70 mb-70">
+    <div class="container">
+        <h3 class="display-4 mb-4">My Account</h3>
+        <form action="{% url 'account_update' %}" method="post">
+            {% csrf_token %}
+        <div class="row">
+               <hr>
+            <div class="col-lg-6">
+                <div class="basic-login mb-50">
+                    
+                        <label for="name">Firstname <span>*</span></label>
+                        <input id="name" type="text" placeholder="Enter First_name" name="first_name" value="{{user.first_name}}">
+                        <label for="pass">Username <span>*</span></label>
+                        <input id="pass" type="text" placeholder="Enter Username..." name="username" value="{{user.username}}">
+                        <label for="userpass">Password <span>*</span></label>
+                        <input id="userpass" type="password" placeholder="Fill only if you want to change password" name="password">
+                <div class="row">
+                    <div class="col-6">
+                        <button type="submit" class="tp-in-btn w-100">Update Account</button>
+                    </div>
+                    <div class="col-6">
+                        <a href="#" class="btn btn-danger w-100 rounded">Logout</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+                       
+            <div class="col-lg-6">
+                <div class="basic-login">
+                    <label for="username">Lastname <span>*</span></label>
+                    <input id="username" type="text" placeholder="Enter last_name" name="last_name" value="{{user.last_name}}">
+                    <label for="email-id">Email Address <span>*</span></label>
+                    <input id="email-id" type="text" placeholder="Email address..." name="email" value="{{user.email}}">
+                    
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+</div>
+<!-- account-area-end -->
+
+{% endblock %}

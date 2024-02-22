@@ -1,0 +1,91 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load cart_tag %}
+
+ <!-- cart-area-start -->
+ <section class="cart-area pt-120 pb-120">
+    <div class="container">
+        <h3 class="cart-page-tital">My Order </h3>
+       <div class="row">
+          <div class="col-12">
+                <form action="#">
+                   <div class="table-content table-responsive">
+                      <table class="table">
+                            <thead>
+                               <tr>
+                                  <th class="product-thumbnail">Images</th>
+                                  <th class="cart-product-name">Product</th>
+                                  <th class="product-price">Unit Price</th>
+                                  <th class="product-quantity">Quantity</th>
+                                  <th class="product-subtotal">Total</th>
+                                  
+                               </tr>
+                            </thead>
+                            <tbody>
+                              {% for key,value in request.session.cart.items %}
+                               <tr id="id{{value.id}}">
+                                  <td class="product-thumbnail"><a href="shop-details.html"><img src="{{value.featured_image}}" alt=""></a></td>
+                                  <td class="product-name"><a href="shop-details.html">{{value.product_name}}</a></td>
+                                  <td class="product-price"><span class="amount">₹{{value.price}}</span></td>
+                                  <td class="product-quantity w-1">
+                                        
+                                    <div class="row">
+                                           
+                                        <div class="col-4">
+                                          <input type="text" value="{{value.quantity}}" class="from-control text-center border-0 ">
+                                        </div>
+                                       
+                                    </div>    
+                                   
+                                  </td>
+                                  <td class="product-subtotal"><span class="amount">Total ₹{{ value.price|multiply:value.quantity }}</span></td>
+                                 
+                               </tr>
+                              {% endfor %}
+                            </tbody>
+                      </table>
+                   </div>
+                  
+                               <a class="tp-btn-h1" id = "rzp-button1">Proceed to checkout</a>
+                            </div>
+                      </div>
+                   </div>
+                </form>
+          </div>
+       </div>
+    </div>
+ </section>
+ <!-- cart-area-end -->
+ <form action="{% url 'success' %}" method="post">
+ <script src = "https://checkout.razorpay.com/v1/checkout.js"></script>
+ <script>
+     var options = {
+         "key": "rzp_test_ixzKncfjW36bKa",
+         "amount":"50000",
+         "name": "Acme Corp.",
+         "description": "Monthly Test Plan",
+         "image": "/your_logo.jpg",
+         "callback_url": "http://127.0.0.1:8000/success",
+         "prefill": {
+             "name": "Gaurav Kumar",
+             "email": "gaurav.kumar@example.com",
+             "contact": "+919876543210"
+         },
+         "notes": {
+             "note_key_1": "Tea. Earl Grey. Hot",
+             "note_key_2": "Make it so."
+         },
+         "theme": {
+             "color": "#F37254"
+         }
+     };
+     var rzp1 = new Razorpay(options);
+     document.getElementById('rzp-button1').onclick = function(e) {
+         rzp1.open();
+         e.preventDefault();
+     }
+</script>
+</form>
+ 
+
+{% endblock %}
